@@ -2,24 +2,49 @@
 
 namespace Sheidin\Fillable;
 
+use Illuminate\Support\ServiceProvider;
 use Sheidin\Fillable\Commands\FillableCommand;
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class FillableServiceProvider extends PackageServiceProvider
+class FillableServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
+    protected $commands = [
+        FillableCommand::class,
+    ];
+
+    /**
+     * Register any package services.
+     *
+     * @return void
+     */
+    public function register()
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-        $package
-            ->name('fillable')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_fillable_table')
-            ->hasCommand(FillableCommand::class);
+        // Register commands for Artisan interface.
+        $this->commands($this->commands);
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['Fillable'];
+    }
+
+    /**
+     * Console-specific booting.
+     *
+     * @return void
+     */
+    protected function bootForConsole()
+    {
+        // Publishing the configuration file.
+        $this->publishes([
+            __DIR__ . '/../config/fillable.php' => config_path('fillable.php'),
+        ], 'fillable');
+
+        // Registering package commands.
+        $this->commands($this->commands);
     }
 }
