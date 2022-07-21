@@ -15,21 +15,24 @@ composer require sheidin/fillable
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="fillable-config"
+php artisan vendor:publish --tag="fillable"
 ```
 
 This is the contents of the published config file:
 
 ```php
 return [
-    'fillable_models_directory' => env('FILLABLE_MODELS_DIR', app_path('Models')),
-    'fillable_ignore_columns' => '',
+    'models_directory' => env('MODELS_DIR', app_path('Models')),
+    'ignore_columns' => ['id'],
 ];
 ```
 ## Usage
 
 ```bash
+php artisan model:fillable
+or
 php artisan model:fillable {MODEL_NAME}
+
 ```
 
 

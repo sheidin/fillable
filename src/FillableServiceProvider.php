@@ -12,6 +12,19 @@ class FillableServiceProvider extends ServiceProvider
     ];
 
     /**
+     * Perform post-registration booting of services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Publishing is only necessary when using the CLI.
+        if ($this->app->runningInConsole()) {
+            $this->bootForConsole();
+        }
+    }
+
+    /**
      * Register any package services.
      *
      * @return void
