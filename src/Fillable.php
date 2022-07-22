@@ -56,7 +56,7 @@ class Fillable
         }/* elseif (Str::contains($this->content, 'public ')) {
             return file_put_contents($this->filePath, Str::replaceFirst("public ", "{$this->fillableString()} public ", $this->content));
         }*/ else {
-            return file_put_contents($this->filePath, Str::replaceFirst("}", "{$this->fillableString()} }", $this->content));
+            return file_put_contents($this->filePath, Str::replaceLast("}", "{$this->fillableString()} }", $this->content));
         }
         return false;
     }
@@ -90,6 +90,7 @@ class Fillable
      */
     public function format(): bool|string|null
     {
+        shell_exec("chmod +x ".base_path('vendor/sheidin/fillable/pint'));
         return shell_exec(base_path('vendor/sheidin/fillable/pint') . ' ' . $this->filePath);
     }
 }
