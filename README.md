@@ -1,7 +1,7 @@
 # Generate fillable attribute for eloquent models
 
 
-This package will help you to fill the fillabel attribute within eloquent model
+This package will help you to fill the fillabel attribute within the Laravel eloquent model
 
 
 ## Installation
@@ -30,9 +30,10 @@ return [
 
 ```bash
 php artisan model:fillable
-or
-php artisan model:fillable {MODEL_NAME}
-
+#additional options:
+model:fillable
+    {model?* : The name of the model}
+    {--no-override : Whether the fillable attribute should not be override}
 ```
 
 
