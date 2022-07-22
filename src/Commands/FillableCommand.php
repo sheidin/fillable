@@ -48,7 +48,7 @@ class FillableCommand extends Command
     {
         try {
             $fillable = Fillable::load($file);
-            $this->comment("Adding fillable to model {$fillable->model}");
+            $this->comment("Adding fillable to model {$fillable->modelName()}");
             /*Run pint to format the file*/
             $fillable->format();
             /*Get list of columns from the DB*/

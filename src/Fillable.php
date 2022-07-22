@@ -32,6 +32,14 @@ class Fillable
     }
 
     /**
+     * @return string
+     */
+    public function modelName(): string
+    {
+        return class_basename($this->model);
+    }
+
+    /**
      * @param bool $override
      * @return bool|int
      */
