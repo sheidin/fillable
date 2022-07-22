@@ -13,6 +13,9 @@ class Fillable
     public Model $model;
     public array $columns;
 
+    private string $start = 'protected $fillable = [';
+    private string $end = '];';
+
 
     /**
      * @param string $file
@@ -45,11 +48,10 @@ class Fillable
      */
     public function addFillableToFile(bool $override = true): bool|int
     {
-        $start = 'protected $fillable = [';
-        $end = '];';
+
         if (count($this->model->getFillable()) && Str::contains($this->content, '$fillable')) {
             if ($override) {
-                return file_put_contents($this->filePath, Str::replaceFirst($start . Str::betweenFirst($this->content, $start, $end) . $end, $this->fillableString(), $this->content));
+                return file_put_contents($this->filePath, Str::replaceFirst($this->start . Str::betweenFirst($this->content, $this->start, $this->end) . $this->end, $this->fillableString(), $this->content));
             }
         }/* elseif (Str::contains($this->content, 'public ')) {
             return file_put_contents($this->filePath, Str::replaceFirst("public ", "{$this->fillableString()} public ", $this->content));
@@ -88,6 +90,6 @@ class Fillable
      */
     public function format(): bool|string|null
     {
-        return shell_exec(base_path('vendor/sheidin/fillable/pint') . ' ' . $this->file);
+        return shell_exec(base_path('vendor/sheidin/fillable/pint') . ' ' . $this->filePath);
     }
 }
