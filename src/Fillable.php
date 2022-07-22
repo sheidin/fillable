@@ -22,9 +22,10 @@ class Fillable
     public static function load(string $file): self
     {
         $instance = new static();
-        $instance->filePath = config('fillable.models_directory') . '/' . $file;
+        $instance->file = $file;
+        $instance->filePath = config('fillable.models_directory') . '/' . $instance->file;
         $instance->content = file_get_contents($instance->filePath);
-        $model = last(explode('/', Str::replaceLast('.php', '', ucfirst($file))));
+        $model = last(explode('/', Str::replaceLast('.php', '', ucfirst($instance->file))));
         $instance->model = $class = app()->make(Str::betweenFirst($instance->content, 'namespace ', ';') . '\\' . $model);
         $instance->columns = $instance->getColumns();
         return $instance;
